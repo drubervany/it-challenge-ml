@@ -78,4 +78,19 @@ public class MutantServiceTest {
         assertTrue(mutantService.isMutant(dna));
     }
 
+    @Test
+    public void mutantDnaVerticalFoundRightSide() {
+
+        String[] dna = {
+                "ATAAGA",
+                "TTATGA",
+                "DTCTGA",
+                "ATATGA",
+                "CTTATT",
+                "TCATTT"
+        };
+
+        assertTrue(mutantService.isMutant(dna));
+    }
+
 }
