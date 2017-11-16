@@ -93,4 +93,12 @@ public class MutantServiceTest {
         assertTrue(mutantService.isMutant(dna));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void humanWithEmptyDna() {
+
+        String[] dna = {};
+
+        assertTrue(mutantService.isMutant(dna));
+    }
+
 }

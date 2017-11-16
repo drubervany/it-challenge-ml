@@ -9,6 +9,10 @@ public class MutantServiceImpl implements MutantService{
 
     public boolean isMutant(String[] dna) {
 
+        if(!this.isValidDna(dna)){
+            throw new IllegalArgumentException();
+        }
+
         for (int i = 0; i < dna.length; i++) {
             for (int j = 0; j < dna[i].length() - 4 ; j++) {
                 // horizontal check
@@ -28,6 +32,13 @@ public class MutantServiceImpl implements MutantService{
         }
 
         return false;
+    }
+
+    private boolean isValidDna(String[] dna){
+        if (dna.length == 0){
+            return false;
+        }
+        return true;
     }
 
 }
