@@ -27,6 +27,11 @@ public class MutantServiceImpl implements MutantService{
                         return true;
                     }
 
+                    // oblicuo desc
+                    if(ComparatorUtils.areEqual(dna[i].charAt(j),dna[i+1].charAt(j+1),dna[i+2].charAt(j+2),dna[i+3].charAt(j+3))){
+                        return true;
+                    }
+
                 }
             }
         }

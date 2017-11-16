@@ -98,6 +98,20 @@ public class MutantServiceTest {
 
         String[] dna = {};
 
+        mutantService.isMutant(dna);
+    }
+
+    @Test
+    public void mutantDnaObliqueFound() {
+
+        String[] dna = {
+                "AADAGA",
+                "CAGTGC",
+                "TTATGT",
+                "AGAAGG",
+                "CCCATA",
+                "TCACTG"};
+
         assertTrue(mutantService.isMutant(dna));
     }
 
