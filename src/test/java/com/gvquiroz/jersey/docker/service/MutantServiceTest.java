@@ -1,9 +1,7 @@
-package service;
+package com.gvquiroz.jersey.docker.service;
 
 import static org.junit.Assert.*;
 
-import com.gvquiroz.jersey.docker.service.MutantService;
-import com.gvquiroz.jersey.docker.service.MutantServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 
