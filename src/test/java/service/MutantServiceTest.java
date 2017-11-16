@@ -3,6 +3,7 @@ package service;
 import static org.junit.Assert.*;
 
 import com.gvquiroz.jersey.docker.service.MutantService;
+import com.gvquiroz.jersey.docker.service.MutantServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +16,7 @@ public class MutantServiceTest {
 
     @Before
     public void setup() {
-        mutantService = new MutantService();
+        mutantService = new com.gvquiroz.jersey.docker.service.MutantServiceImpl();
     }
 
     @Test
