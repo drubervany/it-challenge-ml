@@ -15,6 +15,15 @@ public class MutantServiceImpl implements MutantService{
                 if (ComparatorUtils.areEqual(dna[i].charAt(j), dna[i].charAt(j + 1), dna[i].charAt(j + 2), dna[i].charAt(j + 3))){
                     return true;
                 }
+
+                // Later to this point, vertical checks cant happend
+                if (i < dna.length - 4){
+                    // vertical check
+                    if (ComparatorUtils.areEqual(dna[i].charAt(j),dna[i+1].charAt(j),dna[i+2].charAt(j),dna[i+3].charAt(j))){
+                        return true;
+                    }
+
+                }
             }
         }
 

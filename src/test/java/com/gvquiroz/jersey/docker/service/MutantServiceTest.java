@@ -18,7 +18,7 @@ public class MutantServiceTest {
     }
 
     @Test
-    public void mutantDnaVertical() {
+    public void mutantDnaHorizontalFound() {
 
         String[] dna = {
                 "AADAGA",
@@ -47,5 +47,35 @@ public class MutantServiceTest {
         assertFalse(mutantService.isMutant(dna));
     }
 
+
+    @Test
+    public void mutantDnaVerticalFound() {
+
+        String[] dna = {
+                "AADAGA",
+                "ACGAGC",
+                "AAATGT",
+                "AADTGG",
+                "CTTATA",
+                "TCATTG"
+        };
+
+        assertTrue(mutantService.isMutant(dna));
+    }
+
+    @Test
+    public void mutantDnaVerticalFoundEdge() {
+
+        String[] dna = {
+                "ATAAGA",
+                "TTATGC",
+                "DTCAGT",
+                "ATAAGA",
+                "CTTATT",
+                "TCATTT"
+        };
+
+        assertTrue(mutantService.isMutant(dna));
+    }
 
 }
