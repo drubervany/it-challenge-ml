@@ -18,4 +18,14 @@ public class ComparatorUtilsTest {
     public void comparingWithOneDifferentElement(){
         assertFalse(ComparatorUtils.areEqual('a','b','a','a'));
     }
+
+    @Test
+    public void comparingWithTwoDifferentElement(){
+        assertFalse(ComparatorUtils.areEqual('a','a','c','d'));
+    }
+
+    @Test
+    public void comparingWithLastDifferentElement(){
+        assertFalse(ComparatorUtils.areEqual('a','a','a','d'));
+    }
 }

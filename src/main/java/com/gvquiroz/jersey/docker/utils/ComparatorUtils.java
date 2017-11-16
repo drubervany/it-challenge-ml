@@ -8,5 +8,4 @@ public class ComparatorUtils {
     public static boolean areEqual(char a, char b, char c, char d){
         return a == b && b == c && c == d;
     }
-    
 }
