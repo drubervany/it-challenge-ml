@@ -31,7 +31,7 @@ public class MutantServiceTest {
                 "TCATTG"
         };
 
-        assertEquals(true,mutantService.isMutant(dna));
+        assertTrue(mutantService.isMutant(dna));
     }
 
 }
