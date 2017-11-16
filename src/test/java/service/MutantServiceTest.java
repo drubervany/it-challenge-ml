@@ -34,4 +34,20 @@ public class MutantServiceTest {
         assertTrue(mutantService.isMutant(dna));
     }
 
+    @Test
+    public void mutantNotFound() {
+
+        String[] dna = {
+                "AADAGA",
+                "CCGAGC",
+                "TAATGT",
+                "AADTGG",
+                "CTTATA",
+                "TCATTG"
+        };
+
+        assertFalse(mutantService.isMutant(dna));
+    }
+
+
 }
