@@ -20,8 +20,18 @@ public class MutantServiceTest {
     }
 
     @Test
-    public void testGetMessage() {
-        assertTrue(mutantService.isMutant());
+    public void mutantDnaVertical() {
+
+        String[] dna = {
+                "AADAGA",
+                "CCGAGC",
+                "TAATGT",
+                "AADTGG",
+                "CTTTTA",
+                "TCATTG"
+        };
+
+        assertEquals(true,mutantService.isMutant(dna));
     }
 
 }
