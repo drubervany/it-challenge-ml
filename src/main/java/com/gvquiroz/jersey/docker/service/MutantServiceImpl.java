@@ -43,6 +43,11 @@ public class MutantServiceImpl implements MutantService{
         if (dna.length == 0){
             return false;
         }
+
+        if (dna.length < 4){
+            return false;
+        }
+
         return true;
     }
 

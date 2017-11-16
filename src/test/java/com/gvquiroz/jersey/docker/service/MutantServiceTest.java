@@ -115,4 +115,12 @@ public class MutantServiceTest {
         assertTrue(mutantService.isMutant(dna));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void humanWithLessThanFourDna() {
+
+        String[] dna = {"ATDAA", "CCATD" , "TCAC"};
+
+        mutantService.isMutant(dna);
+    }
+
 }
