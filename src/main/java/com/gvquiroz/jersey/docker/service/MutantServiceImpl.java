@@ -9,10 +9,6 @@ public class MutantServiceImpl implements MutantService{
 
     public boolean isMutant(String[] dna) {
 
-        if(!this.isValidDna(dna)){
-            throw new IllegalArgumentException();
-        }
-
         int findedDna = 0;
 
         for (int i = 0; i < dna.length; i++) {
@@ -44,18 +40,6 @@ public class MutantServiceImpl implements MutantService{
         }
 
         return false;
-    }
-
-    private boolean isValidDna(String[] dna){
-        if (dna.length == 0){
-            return false;
-        }
-
-        if (dna.length < 4){
-            return false;
-        }
-
-        return true;
     }
 
 }

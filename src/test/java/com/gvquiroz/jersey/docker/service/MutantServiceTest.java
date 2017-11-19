@@ -92,15 +92,7 @@ public class MutantServiceTest {
 
         assertTrue(mutantService.isMutant(dna));
     }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void humanWithEmptyDna() {
-
-        String[] dna = {};
-
-        mutantService.isMutant(dna);
-    }
-
+    
     @Test
     public void mutantDnaObliqueFound() {
 
@@ -127,14 +119,6 @@ public class MutantServiceTest {
                 "TCACTG"};
 
         assertTrue(mutantService.isMutant(dna));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void humanWithLessThanFourDna() {
-
-        String[] dna = {"ATDAA", "CCATD" , "TCAC"};
-
-        mutantService.isMutant(dna);
     }
 
 }
