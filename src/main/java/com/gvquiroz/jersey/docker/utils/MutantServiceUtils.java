@@ -30,7 +30,14 @@ public class MutantServiceUtils {
 
         parsedDNAArray = new String[dnaArray.size()];
         for (int i = 0; i < dnaArray.size(); i++) {
-            parsedDNAArray[i] = (String) dnaArray.get(i);
+
+            String dnaUnit = (String) dnaArray.get(i);
+
+            if(dnaUnit.length() < 4){
+                throw new IllegalArgumentException();
+            }
+
+            parsedDNAArray[i] = dnaUnit;
         }
 
         return parsedDNAArray;
