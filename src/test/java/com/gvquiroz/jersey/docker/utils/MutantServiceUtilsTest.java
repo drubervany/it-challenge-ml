@@ -107,7 +107,7 @@ public class MutantServiceUtilsTest {
     public void parseDNAJsonWithWrongChar() throws ParseException {
 
         String dnaString = "{\"dna\":[\"ATGCJA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]}";
-        
+
         MutantServiceUtils.parseJsonDNAStringArray(dnaString);
 
     }

@@ -42,12 +42,12 @@ public class MutantApiTest {
         JSONObject json = new JSONObject();
 
         JSONArray jsonArray = new JSONArray();
-        jsonArray.add("AADAGA");
-        jsonArray.add("CCGAGC");
-        jsonArray.add("TAATGT");
-        jsonArray.add("AADTGG");
-        jsonArray.add("CTTATA");
-        jsonArray.add("TCATTG");
+        jsonArray.add("ACAAGA");
+        jsonArray.add("CAGTGC");
+        jsonArray.add("TTATGT");
+        jsonArray.add("AGAAGG");
+        jsonArray.add("CCCATA");
+        jsonArray.add("TCACTG");
 
         json.put("dna", jsonArray);
 
@@ -69,7 +69,7 @@ public class MutantApiTest {
         jsonArray.add("CCCATA");
         jsonArray.add("TCACTG");
 
-        json.put("dna", jsonArray);
+        json.put("dna",jsonArray);
 
         Response responseMsg = target.path("mutant").request().post(Entity.json(json.toString()));
         assertEquals(200, responseMsg.getStatus());
