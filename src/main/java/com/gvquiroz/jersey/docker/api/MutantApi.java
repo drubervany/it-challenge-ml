@@ -28,7 +28,7 @@ public class MutantApi {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 
-        if(isMutant){
+        if (isMutant) {
             return Response.status(Response.Status.OK).build();
         } else {
             return Response.status(Response.Status.FORBIDDEN).build();

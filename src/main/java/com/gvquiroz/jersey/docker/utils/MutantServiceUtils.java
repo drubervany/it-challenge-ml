@@ -33,11 +33,11 @@ public class MutantServiceUtils {
 
             String dnaUnit = (String) dnaArray.get(i);
 
-            if(dnaUnit.length() < 4){
+            if (dnaUnit.length() < 4) {
                 throw new IllegalArgumentException();
             }
 
-            if(dnaUnit.length() != dnaArray.size()){
+            if (dnaUnit.length() != dnaArray.size()) {
                 throw new IllegalArgumentException();
             }
 

@@ -11,23 +11,23 @@ import org.junit.Test;
  */
 public class MutantServiceUtilsTest {
     @Test
-    public void comparingSameElements(){
-        assertTrue(MutantServiceUtils.areEqual('a','a','a','a'));
+    public void comparingSameElements() {
+        assertTrue(MutantServiceUtils.areEqual('a', 'a', 'a', 'a'));
     }
 
     @Test
-    public void comparingWithOneDifferentElement(){
-        assertFalse(MutantServiceUtils.areEqual('a','b','a','a'));
+    public void comparingWithOneDifferentElement() {
+        assertFalse(MutantServiceUtils.areEqual('a', 'b', 'a', 'a'));
     }
 
     @Test
-    public void comparingWithTwoDifferentElement(){
-        assertFalse(MutantServiceUtils.areEqual('a','a','c','d'));
+    public void comparingWithTwoDifferentElement() {
+        assertFalse(MutantServiceUtils.areEqual('a', 'a', 'c', 'd'));
     }
 
     @Test
-    public void comparingWithLastDifferentElement(){
-        assertFalse(MutantServiceUtils.areEqual('a','a','a','d'));
+    public void comparingWithLastDifferentElement() {
+        assertFalse(MutantServiceUtils.areEqual('a', 'a', 'a', 'd'));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class MutantServiceUtilsTest {
 
         String[] parsedDna = MutantServiceUtils.parseJsonDNAStringArray(dnaString);
 
-        assertArrayEquals(dnaArray,parsedDna);
+        assertArrayEquals(dnaArray, parsedDna);
 
     }
 

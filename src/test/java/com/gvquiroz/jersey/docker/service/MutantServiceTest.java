@@ -92,7 +92,7 @@ public class MutantServiceTest {
 
         assertTrue(mutantService.isMutant(dna));
     }
-    
+
     @Test
     public void mutantDnaObliqueFound() {
 
