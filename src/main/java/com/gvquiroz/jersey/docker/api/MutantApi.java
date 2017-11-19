@@ -24,7 +24,7 @@ public class MutantApi {
 
         try {
             isMutant = mutantService.isMutant(MutantServiceUtils.parseJsonDNAStringArray(dna));
-        } catch (ParseException e) {
+        } catch (ParseException | IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
 

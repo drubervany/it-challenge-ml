@@ -86,4 +86,25 @@ public class MutantApiTest {
 
     }
 
+    @Test
+    public void testBadRequestInvalidCharDNA() {
+
+        JSONObject json = new JSONObject();
+
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.add("ZZZZZZ");
+        jsonArray.add("CAGTGC");
+        jsonArray.add("TTATGT");
+        jsonArray.add("AGAAGG");
+        jsonArray.add("CCCATA");
+        jsonArray.add("TCACTG");
+
+        json.put("dna", jsonArray);
+
+        Response responseMsg = target.path("mutant").request().post(Entity.json(json.toString()));
+        assertEquals(400, responseMsg.getStatus());
+
+    }
+
+
 }
