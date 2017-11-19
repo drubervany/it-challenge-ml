@@ -75,4 +75,15 @@ public class MutantApiTest {
         assertEquals(200, responseMsg.getStatus());
 
     }
+
+    @Test
+    public void testBadRequestMalformedJson() {
+
+        String dnaString = "{\"bad-dna-json\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]}";
+
+        Response responseMsg = target.path("mutant").request().post(Entity.json(dnaString));
+        assertEquals(400, responseMsg.getStatus());
+
+    }
+
 }

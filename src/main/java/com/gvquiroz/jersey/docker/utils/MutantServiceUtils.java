@@ -10,29 +10,27 @@ import org.json.simple.parser.ParseException;
  */
 public class MutantServiceUtils {
 
-    public static boolean areEqual(char a, char b, char c, char d){
+    public static boolean areEqual(char a, char b, char c, char d) {
         return a == b && b == c && c == d;
     }
 
-    public static String [] parseJsonDNAStringArray(String stringToParse){
+    public static String[] parseJsonDNAStringArray(String stringToParse) throws ParseException {
 
         JSONParser parser = new JSONParser();
 
         String[] parsedDNAArray = null;
 
-        try {
-            JSONObject jsonObject = (JSONObject) parser.parse(stringToParse);
+        JSONObject jsonObject = (JSONObject) parser.parse(stringToParse);
 
-            JSONArray dnaArray = (JSONArray) jsonObject.get("dna");
+        JSONArray dnaArray = (JSONArray) jsonObject.get("dna");
 
-            parsedDNAArray = new String[dnaArray.size()];
+        if (dnaArray == null) {
+            throw new IllegalArgumentException();
+        }
 
-            for (int i = 0; i < dnaArray.size(); i++) {
-                parsedDNAArray[i] = (String) dnaArray.get(i);
-            }
-
-        } catch (ParseException e) {
-            e.printStackTrace();
+        parsedDNAArray = new String[dnaArray.size()];
+        for (int i = 0; i < dnaArray.size(); i++) {
+            parsedDNAArray[i] = (String) dnaArray.get(i);
         }
 
         return parsedDNAArray;

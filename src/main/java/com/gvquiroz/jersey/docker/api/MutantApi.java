@@ -9,6 +9,7 @@ import javax.ws.rs.core.Response;
 import com.gvquiroz.jersey.docker.service.MutantService;
 import com.gvquiroz.jersey.docker.service.MutantServiceImpl;
 import com.gvquiroz.jersey.docker.utils.MutantServiceUtils;
+import org.json.simple.parser.ParseException;
 
 @Path("mutant")
 public class MutantApi {
@@ -19,7 +20,13 @@ public class MutantApi {
 
         MutantService mutantService = new MutantServiceImpl();
 
-        boolean isMutant = mutantService.isMutant(MutantServiceUtils.parseJsonDNAStringArray(dna));
+        boolean isMutant;
+
+        try {
+            isMutant = mutantService.isMutant(MutantServiceUtils.parseJsonDNAStringArray(dna));
+        } catch (ParseException e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
 
         if(isMutant){
             return Response.status(Response.Status.OK).build();

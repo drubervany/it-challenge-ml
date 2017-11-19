@@ -3,6 +3,7 @@ package com.gvquiroz.jersey.docker.utils;
 
 import static org.junit.Assert.*;
 
+import org.json.simple.parser.ParseException;
 import org.junit.Test;
 
 /**
@@ -30,7 +31,7 @@ public class MutantServiceUtilsTest {
     }
 
     @Test
-    public void parseDNAJsonToStringArray(){
+    public void parseDNAJsonToStringArray() throws ParseException {
 
         String dnaString = "{\"dna\":[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]}";
 
@@ -47,4 +48,23 @@ public class MutantServiceUtilsTest {
         assertArrayEquals(dnaArray,parsedDna);
 
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void dnaJsonWithoutDnaObject() throws ParseException {
+
+        String dnaString = "{\"bad-dna-json\":[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]}";
+
+        MutantServiceUtils.parseJsonDNAStringArray(dnaString);
+
+    }
+
+    @Test(expected = ParseException.class)
+    public void dnaWithMalformedJson() throws ParseException {
+
+        String dnaString = "{\"bad-dna-json\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]}";
+
+        MutantServiceUtils.parseJsonDNAStringArray(dnaString);
+
+    }
+
 }
