@@ -42,4 +42,23 @@ public class MutantServiceImpl implements MutantService {
         return false;
     }
 
+    public void storeDnaResult(String dna, boolean result){
+
+    }
+
+    @Override
+    public boolean isAllowed(String[] dna) {
+
+        //boolean isAllowed = false;
+
+        //if(isStored){
+        //    // return getResult
+        //} else {
+        //    isAllowed = this.isMutant(dna);
+        //}
+
+        return this.isMutant(dna);
+
+    }
+
 }
