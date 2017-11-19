@@ -85,4 +85,31 @@ public class MutantServiceUtilsTest {
 
     }
 
+    @Test()
+    public void dnaUnitWithInvalidChar() throws ParseException {
+
+        String invalidDnaUnit = "AJGCGA";
+
+        assertFalse(MutantServiceUtils.hasValidCharactersOnDnaUnit(invalidDnaUnit));
+
+    }
+
+    @Test()
+    public void dnaUnitWithValidChar() throws ParseException {
+
+        String invalidDnaUnit = "ATGCGA";
+
+        assertTrue(MutantServiceUtils.hasValidCharactersOnDnaUnit(invalidDnaUnit));
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void parseDNAJsonWithWrongChar() throws ParseException {
+
+        String dnaString = "{\"dna\":[\"ATGCJA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]}";
+        
+        MutantServiceUtils.parseJsonDNAStringArray(dnaString);
+
+    }
+
 }

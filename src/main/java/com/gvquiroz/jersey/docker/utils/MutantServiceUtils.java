@@ -41,11 +41,20 @@ public class MutantServiceUtils {
                 throw new IllegalArgumentException();
             }
 
+            if(!hasValidCharactersOnDnaUnit(dnaUnit)){
+                throw new IllegalArgumentException();
+            }
+
             parsedDNAArray[i] = dnaUnit;
         }
 
         return parsedDNAArray;
 
+    }
+
+    public static boolean hasValidCharactersOnDnaUnit(String dnaUnit){
+        String regex = "[ATGC]+";
+        return dnaUnit.matches(regex);
     }
 
 }
