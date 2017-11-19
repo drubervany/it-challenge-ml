@@ -6,13 +6,9 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 /**
- * Created by gvquiroz on 15/11/17.
+ * Created by gvquiroz on 19/11/17.
  */
-public class MutantServiceUtils {
-
-    public static boolean areEqual(char a, char b, char c, char d) {
-        return a == b && b == c && c == d;
-    }
+public class DnaParserUtils {
 
     public static String[] parseJsonDNAStringArray(String stringToParse) throws ParseException {
 
@@ -56,5 +52,4 @@ public class MutantServiceUtils {
         String regex = "[ATGC]+";
         return dnaUnit.matches(regex);
     }
-
 }

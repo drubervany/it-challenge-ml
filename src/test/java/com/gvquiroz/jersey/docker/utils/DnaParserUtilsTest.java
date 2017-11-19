@@ -1,35 +1,16 @@
 package com.gvquiroz.jersey.docker.utils;
 
-
-import static org.junit.Assert.*;
-
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
 
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 /**
- * Created by gvquiroz on 15/11/17.
+ * Created by gvquiroz on 19/11/17.
  */
-public class MutantServiceUtilsTest {
-    @Test
-    public void comparingSameElements() {
-        assertTrue(MutantServiceUtils.areEqual('a', 'a', 'a', 'a'));
-    }
-
-    @Test
-    public void comparingWithOneDifferentElement() {
-        assertFalse(MutantServiceUtils.areEqual('a', 'b', 'a', 'a'));
-    }
-
-    @Test
-    public void comparingWithTwoDifferentElement() {
-        assertFalse(MutantServiceUtils.areEqual('a', 'a', 'c', 'd'));
-    }
-
-    @Test
-    public void comparingWithLastDifferentElement() {
-        assertFalse(MutantServiceUtils.areEqual('a', 'a', 'a', 'd'));
-    }
-
+public class DnaParserUtilsTest {
     @Test
     public void parseDNAJsonToStringArray() throws ParseException {
 
@@ -43,7 +24,7 @@ public class MutantServiceUtilsTest {
                 "CCCCTA",
                 "TCACTG"};
 
-        String[] parsedDna = MutantServiceUtils.parseJsonDNAStringArray(dnaString);
+        String[] parsedDna = DnaParserUtils.parseJsonDNAStringArray(dnaString);
 
         assertArrayEquals(dnaArray, parsedDna);
 
@@ -54,7 +35,7 @@ public class MutantServiceUtilsTest {
 
         String dnaString = "{\"bad-dna-json\":[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]}";
 
-        MutantServiceUtils.parseJsonDNAStringArray(dnaString);
+        DnaParserUtils.parseJsonDNAStringArray(dnaString);
 
     }
 
@@ -63,7 +44,7 @@ public class MutantServiceUtilsTest {
 
         String dnaString = "{\"dna\":[\"ATGCGA\",\"CAG\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]}";
 
-        MutantServiceUtils.parseJsonDNAStringArray(dnaString);
+        DnaParserUtils.parseJsonDNAStringArray(dnaString);
 
     }
 
@@ -72,7 +53,7 @@ public class MutantServiceUtilsTest {
 
         String dnaString = "{\"dna\":[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\"]}";
 
-        MutantServiceUtils.parseJsonDNAStringArray(dnaString);
+        DnaParserUtils.parseJsonDNAStringArray(dnaString);
 
     }
 
@@ -81,7 +62,7 @@ public class MutantServiceUtilsTest {
 
         String dnaString = "{\"bad-dna-json\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]}";
 
-        MutantServiceUtils.parseJsonDNAStringArray(dnaString);
+        DnaParserUtils.parseJsonDNAStringArray(dnaString);
 
     }
 
@@ -90,7 +71,7 @@ public class MutantServiceUtilsTest {
 
         String invalidDnaUnit = "AJGCGA";
 
-        assertFalse(MutantServiceUtils.hasValidCharactersOnDnaUnit(invalidDnaUnit));
+        assertFalse(DnaParserUtils.hasValidCharactersOnDnaUnit(invalidDnaUnit));
 
     }
 
@@ -99,7 +80,7 @@ public class MutantServiceUtilsTest {
 
         String invalidDnaUnit = "ATGCGA";
 
-        assertTrue(MutantServiceUtils.hasValidCharactersOnDnaUnit(invalidDnaUnit));
+        assertTrue(DnaParserUtils.hasValidCharactersOnDnaUnit(invalidDnaUnit));
 
     }
 
@@ -108,7 +89,7 @@ public class MutantServiceUtilsTest {
 
         String dnaString = "{\"dna\":[\"ATGCJA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]}";
 
-        MutantServiceUtils.parseJsonDNAStringArray(dnaString);
+        DnaParserUtils.parseJsonDNAStringArray(dnaString);
 
     }
 

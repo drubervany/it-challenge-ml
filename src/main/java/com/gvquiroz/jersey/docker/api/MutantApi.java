@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response;
 
 import com.gvquiroz.jersey.docker.service.MutantService;
 import com.gvquiroz.jersey.docker.service.MutantServiceImpl;
-import com.gvquiroz.jersey.docker.utils.MutantServiceUtils;
+import com.gvquiroz.jersey.docker.utils.DnaParserUtils;
 import org.json.simple.parser.ParseException;
 
 @Path("mutant")
@@ -23,7 +23,7 @@ public class MutantApi {
         boolean isMutant;
 
         try {
-            isMutant = mutantService.isMutant(MutantServiceUtils.parseJsonDNAStringArray(dna));
+            isMutant = mutantService.isMutant(DnaParserUtils.parseJsonDNAStringArray(dna));
         } catch (ParseException | IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
