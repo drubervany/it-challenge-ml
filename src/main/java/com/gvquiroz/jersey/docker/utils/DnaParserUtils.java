@@ -10,18 +10,18 @@ import org.json.simple.parser.ParseException;
  */
 public class DnaParserUtils {
 
-    public static String[] parseJsonDNAStringArray(String stringToParse) throws ParseException {
+    public static String[] parseJsonDNAStringArray(String stringToParse) throws ParseException, InvalidDnaException {
 
         JSONParser parser = new JSONParser();
 
-        String[] parsedDNAArray = null;
+        String[] parsedDNAArray;
 
         JSONObject jsonObject = (JSONObject) parser.parse(stringToParse);
 
         JSONArray dnaArray = (JSONArray) jsonObject.get("dna");
 
         if (dnaArray == null) {
-            throw new IllegalArgumentException();
+            throw new InvalidDnaException();
         }
 
         parsedDNAArray = new String[dnaArray.size()];
@@ -30,15 +30,15 @@ public class DnaParserUtils {
             String dnaUnit = (String) dnaArray.get(i);
 
             if (dnaUnit.length() < 4) {
-                throw new IllegalArgumentException();
+                throw new InvalidDnaException();
             }
 
             if (dnaUnit.length() != dnaArray.size()) {
-                throw new IllegalArgumentException();
+                throw new InvalidDnaException();
             }
 
             if(!hasValidCharactersOnDnaUnit(dnaUnit)){
-                throw new IllegalArgumentException();
+                throw new InvalidDnaException();
             }
 
             parsedDNAArray[i] = dnaUnit;

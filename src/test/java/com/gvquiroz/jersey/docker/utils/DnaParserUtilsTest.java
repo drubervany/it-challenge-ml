@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class DnaParserUtilsTest {
     @Test
-    public void parseDNAJsonToStringArray() throws ParseException {
+    public void parseDNAJsonToStringArray() throws ParseException, InvalidDnaException {
 
         String dnaString = "{\"dna\":[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]}";
 
@@ -30,8 +30,8 @@ public class DnaParserUtilsTest {
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void dnaJsonWithoutDnaObject() throws ParseException {
+    @Test(expected = InvalidDnaException.class)
+    public void dnaJsonWithoutDnaObject() throws ParseException, InvalidDnaException {
 
         String dnaString = "{\"bad-dna-json\":[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]}";
 
@@ -39,8 +39,8 @@ public class DnaParserUtilsTest {
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void dnaJsonWithDnaUnitWithLessThanFourLength() throws ParseException {
+    @Test(expected = InvalidDnaException.class)
+    public void dnaJsonWithDnaUnitWithLessThanFourLength() throws ParseException, InvalidDnaException {
 
         String dnaString = "{\"dna\":[\"ATGCGA\",\"CAG\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]}";
 
@@ -48,8 +48,8 @@ public class DnaParserUtilsTest {
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void dnaJsonNotSquareArray() throws ParseException {
+    @Test(expected = InvalidDnaException.class)
+    public void dnaJsonNotSquareArray() throws ParseException, InvalidDnaException {
 
         String dnaString = "{\"dna\":[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\"]}";
 
@@ -58,7 +58,7 @@ public class DnaParserUtilsTest {
     }
 
     @Test(expected = ParseException.class)
-    public void dnaWithMalformedJson() throws ParseException {
+    public void dnaWithMalformedJson() throws ParseException, InvalidDnaException {
 
         String dnaString = "{\"bad-dna-json\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]}";
 
@@ -84,8 +84,8 @@ public class DnaParserUtilsTest {
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void parseDNAJsonWithWrongChar() throws ParseException {
+    @Test(expected = InvalidDnaException.class)
+    public void parseDNAJsonWithWrongChar() throws ParseException, InvalidDnaException {
 
         String dnaString = "{\"dna\":[\"ATGCJA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]}";
 
