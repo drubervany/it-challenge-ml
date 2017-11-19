@@ -67,6 +67,15 @@ public class MutantServiceUtilsTest {
 
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void dnaJsonNotSquareArray() throws ParseException {
+
+        String dnaString = "{\"dna\":[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\"]}";
+
+        MutantServiceUtils.parseJsonDNAStringArray(dnaString);
+
+    }
+
     @Test(expected = ParseException.class)
     public void dnaWithMalformedJson() throws ParseException {
 

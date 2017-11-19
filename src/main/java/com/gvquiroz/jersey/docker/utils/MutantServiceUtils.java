@@ -37,6 +37,10 @@ public class MutantServiceUtils {
                 throw new IllegalArgumentException();
             }
 
+            if(dnaUnit.length() != dnaArray.size()){
+                throw new IllegalArgumentException();
+            }
+
             parsedDNAArray[i] = dnaUnit;
         }
 
