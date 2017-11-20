@@ -1,6 +1,7 @@
 package com.gvquiroz.jersey.docker.service;
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.model.*;
 
@@ -13,25 +14,28 @@ import java.util.List;
  */
 public class DnaStoreServiceImpl implements DnaStoreService {
 
-    @Override
-    public CreateTableResult createSchema(AmazonDynamoDB ddb) {
-        List<AttributeDefinition> attributeDefinitions = new ArrayList<AttributeDefinition>();
-        attributeDefinitions.add(new AttributeDefinition("DNA", ScalarAttributeType.N));
+    private DynamoDB dynamoClient;
 
-        List<KeySchemaElement> ks = new ArrayList<KeySchemaElement>();
-        ks.add(new KeySchemaElement("DNA", KeyType.HASH));
+    public DnaStoreServiceImpl (DynamoDB ddb){
+        this.dynamoClient = ddb;
+    }
+
+    @Override
+    public Table createSchema() {
 
         String tableName = "PersonDna";
 
-        ProvisionedThroughput provisionedthroughput = new ProvisionedThroughput(1000L, 1000L);
+        Table table = this.dynamoClient.createTable(tableName,
+                Arrays.asList(new KeySchemaElement("DNA", KeyType.HASH)), // Sort key
+                Arrays.asList(new AttributeDefinition("DNA", ScalarAttributeType.N)),
+                new ProvisionedThroughput(10L, 10L));
 
-        CreateTableRequest request =
-                new CreateTableRequest()
-                        .withTableName(tableName)
-                        .withAttributeDefinitions(attributeDefinitions)
-                        .withKeySchema(ks)
-                        .withProvisionedThroughput(provisionedthroughput);
+        return table;
+    }
 
-        return ddb.createTable(request);
+    @Override
+    public void storeDna(String dna, boolean result) {
+        Table table = this.dynamoClient.getTable("PersonDna");
+        table.putItem(new Item().withPrimaryKey("DNA", dna.hashCode()).withBoolean("isMutant", result).withString("DNAFull",dna));
     }
 }

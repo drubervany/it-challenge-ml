@@ -21,8 +21,8 @@ public class MutantServiceTest {
     public void mutantDnaHorizontalFound() {
 
         String[] dna = {
-                "AAAAGA",
-                "CCGAGC",
+                "AATAGA",
+                "TTTTGC",
                 "TAATGT",
                 "AADTGG",
                 "CTTTTA",

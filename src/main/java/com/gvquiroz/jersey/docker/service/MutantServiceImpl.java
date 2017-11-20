@@ -1,6 +1,7 @@
 package com.gvquiroz.jersey.docker.service;
 
 import com.gvquiroz.jersey.docker.utils.ComparatorUtils;
+import com.gvquiroz.jersey.docker.utils.ConnectorUtils;
 import com.gvquiroz.jersey.docker.utils.DnaParserUtils;
 import com.gvquiroz.jersey.docker.utils.InvalidDnaException;
 import org.json.simple.parser.ParseException;
@@ -10,7 +11,11 @@ import org.json.simple.parser.ParseException;
  */
 public class MutantServiceImpl implements MutantService {
 
-    private DnaStoreService storeClient = new DnaStoreServiceImpl();
+    private DnaStoreService storeClient;
+
+    public MutantServiceImpl(){
+        this.storeClient = new DnaStoreServiceImpl(ConnectorUtils.getDynamoConnector());
+    }
 
     public boolean isMutant(String[] dna) {
 
