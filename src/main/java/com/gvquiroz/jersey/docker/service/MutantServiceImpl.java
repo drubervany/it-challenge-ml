@@ -10,6 +10,8 @@ import org.json.simple.parser.ParseException;
  */
 public class MutantServiceImpl implements MutantService {
 
+    private DnaStoreService storeClient = new DnaStoreServiceImpl();
+
     public boolean isMutant(String[] dna) {
 
         int findedDna = 0;
@@ -45,22 +47,10 @@ public class MutantServiceImpl implements MutantService {
         return false;
     }
 
-    public void storeDnaResult(String dna, boolean result){
-
-    }
-
     @Override
     public boolean isAllowed(String dna) throws ParseException, InvalidDnaException {
 
-        String []dnaChain = DnaParserUtils.parseJsonDNAStringArray(dna);
-
-        //boolean isAllowed = false;
-
-        //if(isStored){
-        //    // return getResult
-        //} else {
-        //    isAllowed = this.isMutant(dna);
-        //}
+        String[] dnaChain = DnaParserUtils.parseJsonDNAStringArray(dna);
 
         return this.isMutant(dnaChain);
 
