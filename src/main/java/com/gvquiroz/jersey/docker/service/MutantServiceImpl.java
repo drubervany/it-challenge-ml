@@ -1,6 +1,9 @@
 package com.gvquiroz.jersey.docker.service;
 
 import com.gvquiroz.jersey.docker.utils.ComparatorUtils;
+import com.gvquiroz.jersey.docker.utils.DnaParserUtils;
+import com.gvquiroz.jersey.docker.utils.InvalidDnaException;
+import org.json.simple.parser.ParseException;
 
 /**
  * Created by gvquiroz on 15/11/17.
@@ -47,7 +50,9 @@ public class MutantServiceImpl implements MutantService {
     }
 
     @Override
-    public boolean isAllowed(String[] dna) {
+    public boolean isAllowed(String dna) throws ParseException, InvalidDnaException {
+
+        String []dnaChain = DnaParserUtils.parseJsonDNAStringArray(dna);
 
         //boolean isAllowed = false;
 
@@ -57,7 +62,7 @@ public class MutantServiceImpl implements MutantService {
         //    isAllowed = this.isMutant(dna);
         //}
 
-        return this.isMutant(dna);
+        return this.isMutant(dnaChain);
 
     }
 

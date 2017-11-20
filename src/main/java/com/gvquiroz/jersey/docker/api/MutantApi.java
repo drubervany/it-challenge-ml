@@ -22,19 +22,14 @@ public class MutantApi {
         MutantService mutantService = new MutantServiceImpl();
 
         boolean isMutant;
-        String[] dnaChain;
 
         try {
 
-            dnaChain = DnaParserUtils.parseJsonDNAStringArray(dna);
+            isMutant = mutantService.isAllowed(dna);
 
         } catch (ParseException | InvalidDnaException e) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-
-        isMutant = mutantService.isAllowed(dnaChain);
-
-        mutantService.storeDnaResult(dna,isMutant);
 
         if (isMutant) {
             return Response.status(Response.Status.OK).build();
