@@ -97,8 +97,8 @@
 
         <dependency>
             <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk</artifactId>
-            <version>1.11.106</version>
+            <artifactId>aws-java-sdk-dynamodb</artifactId>
+            <version>1.11.29</version>
         </dependency>
 
         <dependency>

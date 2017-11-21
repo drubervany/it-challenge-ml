@@ -6,6 +6,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
@@ -25,13 +26,13 @@ import static org.junit.Assert.assertEquals;
 
 public class MutantApiTest {
 
-    private static HttpServer server;
-    private static WebTarget target;
-    private static AmazonDynamoDB ddb;
-    private static DynamoDBProxyServer dynamoServer;
+    private HttpServer server;
+    private WebTarget target;
+    private AmazonDynamoDB ddb;
+    private DynamoDBProxyServer dynamoServer;
 
-    @BeforeClass
-    public static void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
 
         server = Main.startServer();
         Client c = ClientBuilder.newClient();
@@ -49,8 +50,8 @@ public class MutantApiTest {
 
     }
 
-    @AfterClass
-    public static void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         dynamoServer.stop();
         server.stop();
     }

@@ -11,8 +11,6 @@ import com.gvquiroz.jersey.docker.service.DnaStoreServiceImpl;
 import org.junit.Test;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.model.ListTablesResult;
-import com.amazonaws.services.dynamodbv2.model.TableDescription;
 
 /**
  * Created by gvquiroz on 19/11/17.
