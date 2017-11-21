@@ -7,8 +7,6 @@ import com.amazonaws.services.dynamodbv2.document.Table;
  */
 public interface DnaStoreService {
 
-    Table createSchema();
-
     void storeDna(String dna, boolean result);
 
 }

@@ -20,35 +20,6 @@ import com.amazonaws.services.dynamodbv2.model.TableDescription;
 public class DnaStoreServiceTest {
 
     @Test
-    public void createSchemaTest() {
-        AmazonDynamoDB ddb = DynamoDBEmbedded.create().amazonDynamoDB();
-
-        DynamoDB connector = new DynamoDB(ddb);
-
-        DnaStoreService storeService = new DnaStoreServiceImpl(connector);
-
-        String tableName = "PersonDna";
-
-        try {
-
-            Table res = storeService.createSchema();
-
-            TableDescription tableDesc = res.describe();
-            assertEquals(tableName, tableDesc.getTableName());
-                    tableDesc.getAttributeDefinitions().toString();
-            assertEquals(Long.valueOf(10L), tableDesc.getProvisionedThroughput().getReadCapacityUnits());
-            assertEquals(Long.valueOf(10L), tableDesc.getProvisionedThroughput().getWriteCapacityUnits());
-            assertEquals("ACTIVE", tableDesc.getTableStatus());
-            assertEquals("arn:aws:dynamodb:ddblocal:000000000000:table/PersonDna", tableDesc.getTableArn());
-
-            ListTablesResult tables = ddb.listTables();
-            assertEquals(1, tables.getTableNames().size());
-        } finally {
-            ddb.shutdown();
-        }
-    }
-
-    @Test
     public void storeDnaResultTest() {
         AmazonDynamoDB ddb = DynamoDBEmbedded.create().amazonDynamoDB();
 
@@ -61,7 +32,7 @@ public class DnaStoreServiceTest {
 
         try {
 
-            storeService.createSchema();
+            ConnectorUtils.createPersonDnaSchema(connector);
 
             storeService.storeDna(dnaString,result);
 

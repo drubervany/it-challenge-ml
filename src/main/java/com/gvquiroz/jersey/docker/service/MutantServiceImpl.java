@@ -57,7 +57,11 @@ public class MutantServiceImpl implements MutantService {
 
         String[] dnaChain = DnaParserUtils.parseJsonDNAStringArray(dna);
 
-        return this.isMutant(dnaChain);
+        boolean result = this.isMutant(dnaChain);
+
+        storeClient.storeDna(dna,result);
+
+        return result;
 
     }
 

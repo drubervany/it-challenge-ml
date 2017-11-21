@@ -6,12 +6,18 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
+import com.amazonaws.client.builder.AwsClientBuilder;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.local.embedded.DynamoDBEmbedded;
+import com.amazonaws.services.dynamodbv2.local.main.ServerRunner;
+import com.amazonaws.services.dynamodbv2.local.server.DynamoDBProxyServer;
+import com.gvquiroz.jersey.docker.utils.ConnectorUtils;
 import org.glassfish.grizzly.http.server.HttpServer;
 
 import org.json.simple.JSONObject;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import org.json.simple.JSONArray;
 
@@ -19,20 +25,33 @@ import static org.junit.Assert.assertEquals;
 
 public class MutantApiTest {
 
-    private HttpServer server;
-    private WebTarget target;
+    private static HttpServer server;
+    private static WebTarget target;
+    private static AmazonDynamoDB ddb;
+    private static DynamoDBProxyServer dynamoServer;
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
 
         server = Main.startServer();
         Client c = ClientBuilder.newClient();
         target = c.target(Main.BASE_URI);
 
+        final String[] localArgs = { "-inMemory" };
+
+        dynamoServer = ServerRunner.createServerFromCommandLineArgs(localArgs);
+        dynamoServer.start();
+
+        ddb = AmazonDynamoDBClientBuilder.standard().withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration("http://localhost:8000", "us-west-2"))
+                .build();
+
+        ConnectorUtils.createPersonDnaSchema(new DynamoDB(ddb));
+
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterClass
+    public static void tearDown() throws Exception {
+        dynamoServer.stop();
         server.stop();
     }
 
