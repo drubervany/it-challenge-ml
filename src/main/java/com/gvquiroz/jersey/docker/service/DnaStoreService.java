@@ -15,6 +15,11 @@ public interface DnaStoreService {
     Item getDnaResult(String dna);
 
     BigDecimal getMutantCount();
+
     BigDecimal getHumanCount();
+
+    void incrementHumanCounter();
+
+    void incrementMutantCounter();
 
 }

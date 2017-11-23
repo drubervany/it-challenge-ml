@@ -83,15 +83,22 @@ public class DnaStoreServiceTest {
 
         DnaStoreService storeService = new DnaStoreServiceImpl(connector);
 
-        String dnaString = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CACCTA\",\"TCACTG\"]}";
-        boolean result = false;
+        String humanString = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CACCTA\",\"TCACTG\"]}";
+        boolean negativeResult = false;
+
+        String mutantString = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CACCTA\",\"TCACTG\"]}";
+        boolean positiveResult = true;
 
         try {
 
             ConnectorUtils.createDbSchema(connector);
-            storeService.storeDna(dnaString,result);
+            storeService.storeDna(humanString,negativeResult);
 
             assertEquals(BigDecimal.ZERO, storeService.getMutantCount());
+
+            storeService.storeDna(mutantString,positiveResult);
+
+            assertEquals(BigDecimal.ONE, storeService.getMutantCount());
 
         } finally {
             ddb.shutdown();
@@ -106,15 +113,22 @@ public class DnaStoreServiceTest {
 
         DnaStoreService storeService = new DnaStoreServiceImpl(connector);
 
-        String dnaString = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CACCTA\",\"TCACTG\"]}";
-        boolean result = true;
+        String firstHumanDna = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CACCTA\",\"TCACTG\"]}";
+        boolean firstHumanResult = false;
+
+        String secondHumanDna = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CACCTA\",\"TCACTG\"]}";
+        boolean secondHumanResult = false;
 
         try {
 
             ConnectorUtils.createDbSchema(connector);
-            storeService.storeDna(dnaString,result);
+            storeService.storeDna(firstHumanDna,firstHumanResult);
 
-            assertEquals(BigDecimal.ZERO, storeService.getHumanCount());
+            assertEquals(BigDecimal.ONE, storeService.getHumanCount());
+
+            storeService.storeDna(secondHumanDna,secondHumanResult);
+
+            assertEquals(new BigDecimal(2), storeService.getHumanCount());
 
         } finally {
             ddb.shutdown();
