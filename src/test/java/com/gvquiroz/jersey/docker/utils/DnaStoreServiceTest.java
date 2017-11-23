@@ -45,4 +45,32 @@ public class DnaStoreServiceTest {
         }
     }
 
+    @Test
+    public void retrieveDnaResultTest() {
+        AmazonDynamoDB ddb = DynamoDBEmbedded.create().amazonDynamoDB();
+
+        DynamoDB connector = new DynamoDB(ddb);
+
+        DnaStoreService storeService = new DnaStoreServiceImpl(connector);
+
+        String dnaString = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CCCCTA\",\"TCACTG\"]}";
+        boolean result = true;
+
+        try {
+
+            ConnectorUtils.createPersonDnaSchema(connector);
+
+            storeService.storeDna(dnaString,result);
+
+            Table table = connector.getTable("PersonDna");
+            Item item = storeService.getDnaResult(dnaString);
+
+            assertEquals(dnaString,item.getString("DNAFull"));
+            assertEquals(result,item.getBoolean("isMutant"));
+
+        } finally {
+            ddb.shutdown();
+        }
+    }
+
 }
