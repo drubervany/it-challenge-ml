@@ -135,4 +135,35 @@ public class DnaStoreServiceTest {
         }
     }
 
+    @Test
+    public void getMutantToHumanRatio() {
+        AmazonDynamoDB ddb = DynamoDBEmbedded.create().amazonDynamoDB();
+
+        DynamoDB connector = new DynamoDB(ddb);
+
+        DnaStoreService storeService = new DnaStoreServiceImpl(connector);
+
+        String firstHumanDna = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CACCTA\",\"TCACTG\"]}";
+        boolean firstHumanResult = false;
+
+        String secondHumanDna = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CACCTA\",\"TCACTG\"]}";
+        boolean secondHumanResult = false;
+
+        String firstMutantDna = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CACCTA\",\"TCACTG\"]}";
+        boolean mutantDnaResult = true;
+
+        try {
+
+            ConnectorUtils.createDbSchema(connector);
+            storeService.storeDna(firstHumanDna,firstHumanResult);;
+            storeService.storeDna(secondHumanDna,secondHumanResult);
+            storeService.storeDna(firstMutantDna,mutantDnaResult);
+
+            assertEquals(new BigDecimal(0.5), storeService.getHumanToMutantRatio());
+
+        } finally {
+            ddb.shutdown();
+        }
+    }
+
 }

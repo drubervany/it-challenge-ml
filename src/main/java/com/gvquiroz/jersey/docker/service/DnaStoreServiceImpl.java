@@ -58,7 +58,11 @@ public class DnaStoreServiceImpl implements DnaStoreService {
     }
 
     @Override
-    public void incrementHumanCounter() {
+    public BigDecimal getHumanToMutantRatio() {
+        return this.getMutantCount().divide(this.getHumanCount(),1,BigDecimal.ROUND_HALF_EVEN);
+    }
+
+    private void incrementHumanCounter() {
         Table statsTable = this.dynamoClient.getTable("PersonStats");
         Map<String,String> expressionAttributeNames = new HashMap<>();
         expressionAttributeNames.put("#p", "Founded");
@@ -73,8 +77,7 @@ public class DnaStoreServiceImpl implements DnaStoreService {
                 expressionAttributeValues);
     }
 
-    @Override
-    public void incrementMutantCounter() {
+    private void incrementMutantCounter() {
         Table statsTable = this.dynamoClient.getTable("PersonStats");
         Map<String,String> expressionAttributeNames = new HashMap<>();
         expressionAttributeNames.put("#p", "Founded");
@@ -88,4 +91,7 @@ public class DnaStoreServiceImpl implements DnaStoreService {
                 expressionAttributeNames,
                 expressionAttributeValues);
     }
+
+
+
 }
