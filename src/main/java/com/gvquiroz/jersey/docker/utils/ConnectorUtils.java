@@ -4,6 +4,7 @@ import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBAsyncClientBuilder;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.model.*;
 
@@ -40,5 +41,19 @@ public class ConnectorUtils {
         return table;
     }
 
+    public static Table createPersonStatsSchema(DynamoDB connector){
+
+        String tableName = "PersonStats";
+
+        Table table = connector.createTable(tableName,
+                Arrays.asList(new KeySchemaElement("Humans", KeyType.HASH)), // Sort key
+                Arrays.asList(new AttributeDefinition("Humans", ScalarAttributeType.S)),
+                new ProvisionedThroughput(10L, 10L));
+
+        table.putItem(new Item().withPrimaryKey("Humans", "Person").withNumber("Founded", 0));
+        table.putItem(new Item().withPrimaryKey("Humans", "Mutant").withNumber("Founded", 0));
+
+        return table;
+    }
 
 }
