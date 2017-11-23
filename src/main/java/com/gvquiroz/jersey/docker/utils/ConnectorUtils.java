@@ -20,7 +20,6 @@ public class ConnectorUtils {
 
         if (dbConnector == null){
             AmazonDynamoDB client = AmazonDynamoDBAsyncClientBuilder.standard()
-                    .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration("http://localhost:8000", "us-west-2"))
                     .build();
             dbConnector = new DynamoDB(client);
         }

@@ -1,5 +1,6 @@
 package com.gvquiroz.jersey.docker.service;
 
+import com.amazonaws.services.dynamodbv2.document.Item;
 import com.gvquiroz.jersey.docker.utils.ComparatorUtils;
 import com.gvquiroz.jersey.docker.utils.ConnectorUtils;
 import com.gvquiroz.jersey.docker.utils.DnaParserUtils;
@@ -57,9 +58,17 @@ public class MutantServiceImpl implements MutantService {
 
         String[] dnaChain = DnaParserUtils.parseJsonDNAStringArray(dna);
 
-        boolean result = this.isMutant(dnaChain);
+        Item storedDna = storeClient.getDnaResult(dna);
 
-        storeClient.storeDna(dna,result);
+        boolean result;
+
+        // Avoid storing twice the same DNA, retriving it if found
+        if (storedDna != null){
+            result = storedDna.getBoolean("isMutant");
+        } else {
+            result = this.isMutant(dnaChain);
+            storeClient.storeDna(dna,result);
+        }
 
         return result;
 
