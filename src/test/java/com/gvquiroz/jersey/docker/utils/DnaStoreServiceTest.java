@@ -12,6 +12,8 @@ import org.junit.Test;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 
+import java.math.BigDecimal;
+
 /**
  * Created by gvquiroz on 19/11/17.
  */
@@ -30,7 +32,7 @@ public class DnaStoreServiceTest {
 
         try {
 
-            ConnectorUtils.createPersonDnaSchema(connector);
+            ConnectorUtils.createDbSchema(connector);
 
             storeService.storeDna(dnaString,result);
 
@@ -58,7 +60,7 @@ public class DnaStoreServiceTest {
 
         try {
 
-            ConnectorUtils.createPersonDnaSchema(connector);
+            ConnectorUtils.createDbSchema(connector);
 
             storeService.storeDna(dnaString,result);
 
@@ -67,6 +69,52 @@ public class DnaStoreServiceTest {
 
             assertEquals(dnaString,item.getString("DNAFull"));
             assertEquals(result,item.getBoolean("isMutant"));
+
+        } finally {
+            ddb.shutdown();
+        }
+    }
+
+    @Test
+    public void retrieveMutantStats() {
+        AmazonDynamoDB ddb = DynamoDBEmbedded.create().amazonDynamoDB();
+
+        DynamoDB connector = new DynamoDB(ddb);
+
+        DnaStoreService storeService = new DnaStoreServiceImpl(connector);
+
+        String dnaString = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CACCTA\",\"TCACTG\"]}";
+        boolean result = false;
+
+        try {
+
+            ConnectorUtils.createDbSchema(connector);
+            storeService.storeDna(dnaString,result);
+
+            assertEquals(BigDecimal.ZERO, storeService.getMutantCount());
+
+        } finally {
+            ddb.shutdown();
+        }
+    }
+
+    @Test
+    public void retrieveHumanStats() {
+        AmazonDynamoDB ddb = DynamoDBEmbedded.create().amazonDynamoDB();
+
+        DynamoDB connector = new DynamoDB(ddb);
+
+        DnaStoreService storeService = new DnaStoreServiceImpl(connector);
+
+        String dnaString = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CACCTA\",\"TCACTG\"]}";
+        boolean result = true;
+
+        try {
+
+            ConnectorUtils.createDbSchema(connector);
+            storeService.storeDna(dnaString,result);
+
+            assertEquals(BigDecimal.ZERO, storeService.getHumanCount());
 
         } finally {
             ddb.shutdown();

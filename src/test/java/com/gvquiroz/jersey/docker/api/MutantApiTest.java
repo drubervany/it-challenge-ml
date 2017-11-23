@@ -46,7 +46,7 @@ public class MutantApiTest {
         ddb = AmazonDynamoDBClientBuilder.standard().withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration("http://localhost:8000", "us-west-2"))
                 .build();
 
-        ConnectorUtils.createPersonDnaSchema(new DynamoDB(ddb));
+        ConnectorUtils.createDbSchema(new DynamoDB(ddb));
 
     }
 

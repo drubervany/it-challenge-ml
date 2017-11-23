@@ -29,6 +29,11 @@ public class ConnectorUtils {
         return dbConnector;
     }
 
+    public static void createDbSchema(DynamoDB connector){
+        ConnectorUtils.createPersonDnaSchema(connector);
+        ConnectorUtils.createPersonStatsSchema(connector);
+    }
+
     public static Table createPersonDnaSchema(DynamoDB connector) {
 
         String tableName = "PersonDna";
