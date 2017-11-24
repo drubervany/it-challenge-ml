@@ -6,6 +6,7 @@ import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.local.embedded.DynamoDBEmbedded;
+import com.gvquiroz.jersey.docker.entities.VerificationStats;
 import com.gvquiroz.jersey.docker.service.DnaStoreService;
 import com.gvquiroz.jersey.docker.service.DnaStoreServiceImpl;
 import org.junit.Test;
@@ -136,7 +137,7 @@ public class DnaStoreServiceTest {
     }
 
     @Test
-    public void getMutantToHumanRatio() {
+    public void getMutantToHumanStats() {
         AmazonDynamoDB ddb = DynamoDBEmbedded.create().amazonDynamoDB();
 
         DynamoDB connector = new DynamoDB(ddb);
@@ -159,7 +160,11 @@ public class DnaStoreServiceTest {
             storeService.storeDna(secondHumanDna,secondHumanResult);
             storeService.storeDna(firstMutantDna,mutantDnaResult);
 
-            assertEquals(new BigDecimal(0.5), storeService.getHumanToMutantRatio());
+            VerificationStats stats = storeService.getHumanToMutantRatio();
+
+            assertEquals(new BigDecimal(1), stats.getMutantCount());
+            assertEquals(new BigDecimal(2), stats.getHumanCount());
+            assertEquals(new BigDecimal(0.5), stats.getRatio());
 
         } finally {
             ddb.shutdown();

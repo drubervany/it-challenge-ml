@@ -1,7 +1,7 @@
 package com.gvquiroz.jersey.docker.service;
 
 import com.amazonaws.services.dynamodbv2.document.Item;
-import com.amazonaws.services.dynamodbv2.document.Table;
+import com.gvquiroz.jersey.docker.entities.VerificationStats;
 
 import java.math.BigDecimal;
 
@@ -18,6 +18,6 @@ public interface DnaStoreService {
 
     BigDecimal getHumanCount();
 
-    BigDecimal getHumanToMutantRatio();
+    VerificationStats getHumanToMutantRatio();
 
 }

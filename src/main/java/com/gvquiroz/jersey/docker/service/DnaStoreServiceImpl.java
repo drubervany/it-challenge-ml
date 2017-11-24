@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.UpdateItemOutcome;
+import com.gvquiroz.jersey.docker.entities.VerificationStats;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -58,8 +59,13 @@ public class DnaStoreServiceImpl implements DnaStoreService {
     }
 
     @Override
-    public BigDecimal getHumanToMutantRatio() {
-        return this.getMutantCount().divide(this.getHumanCount(),1,BigDecimal.ROUND_HALF_EVEN);
+    public VerificationStats getHumanToMutantRatio() {
+
+        BigDecimal mutantCount = this.getMutantCount();
+        BigDecimal humanCount = this.getHumanCount();
+        BigDecimal ratio = mutantCount.divide(humanCount,1,BigDecimal.ROUND_HALF_EVEN);
+
+        return new VerificationStats(mutantCount, humanCount, ratio);
     }
 
     private void incrementHumanCounter() {
