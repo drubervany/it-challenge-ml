@@ -63,9 +63,16 @@ public class DnaStoreServiceImpl implements DnaStoreService {
 
         BigDecimal mutantCount = this.getMutantCount();
         BigDecimal humanCount = this.getHumanCount();
-        BigDecimal ratio = mutantCount.divide(humanCount,1,BigDecimal.ROUND_HALF_EVEN);
 
-        return new VerificationStats(mutantCount, humanCount, ratio);
+        String ratio;
+
+        if(this.getHumanCount().equals(BigDecimal.ZERO)){
+            ratio = mutantCount + ":0";
+        } else {
+            ratio = mutantCount.divide(humanCount,1,BigDecimal.ROUND_HALF_EVEN).toString();
+        }
+
+        return new VerificationStats(mutantCount.toString(), humanCount.toString(), ratio);
     }
 
     private void incrementHumanCounter() {

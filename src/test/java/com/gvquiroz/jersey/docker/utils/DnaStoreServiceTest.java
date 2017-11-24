@@ -162,9 +162,42 @@ public class DnaStoreServiceTest {
 
             VerificationStats stats = storeService.getHumanToMutantRatio();
 
-            assertEquals(new BigDecimal(1), stats.getMutantCount());
-            assertEquals(new BigDecimal(2), stats.getHumanCount());
-            assertEquals(new BigDecimal(0.5), stats.getRatio());
+            assertEquals("1", stats.getMutantCount());
+            assertEquals("2", stats.getHumanCount());
+            assertEquals("0.5", stats.getRatio());
+
+        } finally {
+            ddb.shutdown();
+        }
+    }
+
+    @Test
+    public void getRatioWhenHumanCountIsZero() {
+        AmazonDynamoDB ddb = DynamoDBEmbedded.create().amazonDynamoDB();
+
+        DynamoDB connector = new DynamoDB(ddb);
+
+        DnaStoreService storeService = new DnaStoreServiceImpl(connector);
+
+
+        String secondMutantDna = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CACCTA\",\"TCACTG\"]}";
+        boolean secondMutantResult = true;
+
+        String firstMutantDna = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CACCTA\",\"TCACTG\"]}";
+        boolean mutantDnaResult = true;
+
+        try {
+
+            ConnectorUtils.createDbSchema(connector);
+            storeService.storeDna(secondMutantDna, secondMutantResult);
+            ;
+            storeService.storeDna(firstMutantDna, mutantDnaResult);
+
+            VerificationStats stats = storeService.getHumanToMutantRatio();
+
+            assertEquals("2", stats.getMutantCount());
+            assertEquals("0", stats.getHumanCount());
+            assertEquals("2:0", stats.getRatio());
 
         } finally {
             ddb.shutdown();

@@ -7,25 +7,25 @@ import java.math.BigDecimal;
  */
 public class VerificationStats {
 
-    private BigDecimal ratio;
-    private BigDecimal mutantCount;
-    private BigDecimal humanCount;
+    private String ratio;
+    private String mutantCount;
+    private String humanCount;
 
 
-    public VerificationStats(BigDecimal mutantCount, BigDecimal humanCount, BigDecimal ratio){
+    public VerificationStats(String mutantCount, String humanCount, String ratio){
         this.ratio = ratio;
         this.mutantCount = mutantCount;
         this.humanCount = humanCount;
     }
 
-    public BigDecimal getRatio() {
+    public String getRatio() {
         return ratio;
     }
 
-    public BigDecimal getMutantCount() {
+    public String getMutantCount() {
         return mutantCount;
     }
-    public BigDecimal getHumanCount() {
+    public String getHumanCount() {
         return humanCount;
     }
 }
