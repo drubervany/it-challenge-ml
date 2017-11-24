@@ -18,6 +18,4 @@ public interface DnaStoreService {
 
     BigDecimal getHumanCount();
 
-    VerificationStats getHumanToMutantRatio();
-
 }

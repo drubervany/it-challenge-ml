@@ -6,7 +6,6 @@ import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.local.embedded.DynamoDBEmbedded;
-import com.gvquiroz.jersey.docker.entities.VerificationStats;
 import com.gvquiroz.jersey.docker.service.DnaStoreService;
 import com.gvquiroz.jersey.docker.service.DnaStoreServiceImpl;
 import org.junit.Test;
@@ -136,72 +135,5 @@ public class DnaStoreServiceTest {
         }
     }
 
-    @Test
-    public void getMutantToHumanStats() {
-        AmazonDynamoDB ddb = DynamoDBEmbedded.create().amazonDynamoDB();
-
-        DynamoDB connector = new DynamoDB(ddb);
-
-        DnaStoreService storeService = new DnaStoreServiceImpl(connector);
-
-        String firstHumanDna = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CACCTA\",\"TCACTG\"]}";
-        boolean firstHumanResult = false;
-
-        String secondHumanDna = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CACCTA\",\"TCACTG\"]}";
-        boolean secondHumanResult = false;
-
-        String firstMutantDna = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CACCTA\",\"TCACTG\"]}";
-        boolean mutantDnaResult = true;
-
-        try {
-
-            ConnectorUtils.createDbSchema(connector);
-            storeService.storeDna(firstHumanDna,firstHumanResult);;
-            storeService.storeDna(secondHumanDna,secondHumanResult);
-            storeService.storeDna(firstMutantDna,mutantDnaResult);
-
-            VerificationStats stats = storeService.getHumanToMutantRatio();
-
-            assertEquals("1", stats.getMutantCount());
-            assertEquals("2", stats.getHumanCount());
-            assertEquals("0.5", stats.getRatio());
-
-        } finally {
-            ddb.shutdown();
-        }
-    }
-
-    @Test
-    public void getRatioWhenHumanCountIsZero() {
-        AmazonDynamoDB ddb = DynamoDBEmbedded.create().amazonDynamoDB();
-
-        DynamoDB connector = new DynamoDB(ddb);
-
-        DnaStoreService storeService = new DnaStoreServiceImpl(connector);
-
-
-        String secondMutantDna = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CACCTA\",\"TCACTG\"]}";
-        boolean secondMutantResult = true;
-
-        String firstMutantDna = "{\"dna\";[\"ATGCGA\",\"CAGTGC\",\"TTATGT\",\"AGAAGG\",\"CACCTA\",\"TCACTG\"]}";
-        boolean mutantDnaResult = true;
-
-        try {
-
-            ConnectorUtils.createDbSchema(connector);
-            storeService.storeDna(secondMutantDna, secondMutantResult);
-            ;
-            storeService.storeDna(firstMutantDna, mutantDnaResult);
-
-            VerificationStats stats = storeService.getHumanToMutantRatio();
-
-            assertEquals("2", stats.getMutantCount());
-            assertEquals("0", stats.getHumanCount());
-            assertEquals("2:0", stats.getRatio());
-
-        } finally {
-            ddb.shutdown();
-        }
-    }
 
 }

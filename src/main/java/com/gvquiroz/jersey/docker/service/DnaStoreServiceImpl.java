@@ -58,22 +58,7 @@ public class DnaStoreServiceImpl implements DnaStoreService {
         return table.getItem("Humans", "Person").getNumber("Founded");
     }
 
-    @Override
-    public VerificationStats getHumanToMutantRatio() {
 
-        BigDecimal mutantCount = this.getMutantCount();
-        BigDecimal humanCount = this.getHumanCount();
-
-        String ratio;
-
-        if(this.getHumanCount().equals(BigDecimal.ZERO)){
-            ratio = mutantCount + ":0";
-        } else {
-            ratio = mutantCount.divide(humanCount,1,BigDecimal.ROUND_HALF_EVEN).toString();
-        }
-
-        return new VerificationStats(mutantCount.toString(), humanCount.toString(), ratio);
-    }
 
     private void incrementHumanCounter() {
         Table statsTable = this.dynamoClient.getTable("PersonStats");
