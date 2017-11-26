@@ -1,6 +1,7 @@
 package com.gvquiroz.jersey.docker.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
@@ -23,19 +24,20 @@ public class VerificationStats implements Serializable {
         this.humanCount = humanCount;
     }
 
-    @JsonProperty("value")
+    @XmlElement(name = "ratio")
     public String getRatio() {
         return ratio;
     }
 
+    @XmlElement(name = "count_mutant_dna")
     public String getMutantCount() {
         return mutantCount;
     }
 
+    @XmlElement(name = "count_human_dna")
     public String getHumanCount() {
         return humanCount;
     }
-
 
     public void setHumanCount(String humanCount){
         this.humanCount = humanCount;
@@ -47,4 +49,5 @@ public class VerificationStats implements Serializable {
     public void setRatio(String ratio){
         this.ratio = ratio;
     }
+
 }
