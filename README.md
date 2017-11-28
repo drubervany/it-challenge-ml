@@ -9,9 +9,9 @@ Magneto quiere reclutar la mayor cantidad de mutantes para poder luchar contra l
 ![Screenshot](diagram/arch.png)
 
 ## Endpoints
-52.206.172.60:8080/v1/mutant
+/v1/mutant
 
-52.206.172.60:8080/v1/stats
+/v1/stats
 
 ## Usage
 
